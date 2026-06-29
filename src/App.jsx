@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { useCategories } from './hooks/useCategories';
 import { useTransactions } from './hooks/useTransactions';
+import { useTheme } from './hooks/useTheme';
 import { ToastProvider, useToast } from './components/Toast';
 import AuthScreen from './components/AuthScreen';
 import Drawer from './components/Drawer';
@@ -15,7 +16,8 @@ function AppInner() {
   const { user, loading: authLoading, loginWithGoogle, logout } = useAuth();
   const userId = user?.id;
   const { categories, loadCategories, ensureDefaults, addCategory, deleteCategory } = useCategories(userId);
-  const { transactions, loadTransactions, addTransaction, deleteTransaction, clearAll, updateCategoryName } = useTransactions(userId);
+  const { transactions, loadTransactions, addTransaction, updateTransaction, deleteTransaction, clearAll, updateCategoryName } = useTransactions(userId);
+  const { theme, toggleTheme } = useTheme();
   const showToast = useToast();
 
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -122,7 +124,7 @@ function AppInner() {
       />
 
       <div className="main-content">
-        <Topbar activeSection={activeSection} onOpenDrawer={() => setDrawerOpen(true)} />
+        <Topbar activeSection={activeSection} onOpenDrawer={() => setDrawerOpen(true)} theme={theme} onToggleTheme={toggleTheme} />
 
         {dataLoading && (
           <div className="loading-overlay">
@@ -145,7 +147,9 @@ function AppInner() {
           <section className="section active">
             <TransactionList
               transactions={transactions}
+              categories={categories}
               onDelete={deleteTransaction}
+              onUpdate={updateTransaction}
               onClearAll={handleClearAllModal}
             />
           </section>

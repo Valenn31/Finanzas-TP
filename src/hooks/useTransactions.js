@@ -38,6 +38,20 @@ export function useTransactions(userId) {
     return {};
   }, []);
 
+  const updateTransaction = useCallback(async (id, updates) => {
+    const { data, error } = await supabase
+      .from('transactions')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) return { error };
+
+    setTransactions(prev => prev.map(t => t.id === id ? data : t));
+    return { data };
+  }, []);
+
   const clearAll = useCallback(async () => {
     const { error } = await supabase
       .from('transactions')
@@ -59,5 +73,5 @@ export function useTransactions(userId) {
     );
   }, []);
 
-  return { transactions, loadTransactions, addTransaction, deleteTransaction, clearAll, updateCategoryName };
+  return { transactions, loadTransactions, addTransaction, updateTransaction, deleteTransaction, clearAll, updateCategoryName };
 }

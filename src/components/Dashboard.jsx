@@ -1,6 +1,7 @@
 import { formatCurrency } from '../lib/helpers';
 import TransactionForm from './TransactionForm';
 import MonthlySummary from './MonthlySummary';
+import MonthlyChart from './MonthlyChart';
 
 export default function Dashboard({ transactions, categories, onAddTransaction }) {
   const income = transactions.filter(t => t.type === 'income').reduce((s, t) => s + Number(t.amount), 0);
@@ -35,6 +36,7 @@ export default function Dashboard({ transactions, categories, onAddTransaction }
       </div>
 
       <TransactionForm categories={categories} onAdd={onAddTransaction} />
+      <MonthlyChart transactions={transactions} />
       <MonthlySummary transactions={transactions} />
     </>
   );

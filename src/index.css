@@ -120,7 +120,6 @@ body {
    APP SCREEN
 ============================================= */
 .app-screen { display: flex; min-height: 100vh; }
-.app-screen.hidden { display: none; }
 
 /* =============================================
    DRAWER
@@ -389,8 +388,6 @@ body {
   color: var(--text-muted);
   font-size: .9rem;
 }
-
-.loading-overlay.hidden { display: none; }
 
 .spinner {
   width: 36px; height: 36px;
@@ -704,7 +701,7 @@ textarea { resize: vertical; min-height: 66px; }
 
 .tx-item {
   display: grid;
-  grid-template-columns: 3px 1fr auto auto;
+  grid-template-columns: 3px 1fr auto auto auto;
   gap: 0 12px;
   align-items: center;
   background: var(--surface);
@@ -1043,4 +1040,252 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .cat-panels       { grid-template-columns: 1fr; }
   .cat-form-grid    { grid-template-columns: 1fr; }
   .topbar-date      { display: none; }
+}
+
+/* =============================================
+   LIGHT THEME
+============================================= */
+[data-theme="light"] {
+  --bg:           #F5F6FA;
+  --surface:      #FFFFFF;
+  --surface-2:    #F0F1F5;
+  --border:       #E2E4EA;
+  --text:         #1A1D2E;
+  --text-muted:   #6B7085;
+  --income:       #00B894;
+  --income-dim:   rgba(0,184,148,.1);
+  --expense:      #E74C3C;
+  --expense-dim:  rgba(231,76,60,.1);
+  --accent:       #6C5CE7;
+  --accent-dim:   rgba(108,92,231,.1);
+  --shadow:       0 4px 24px rgba(0,0,0,.08);
+}
+
+[data-theme="light"] .topbar {
+  background: rgba(245,246,250,.9);
+}
+
+[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none;
+}
+
+[data-theme="light"] .recharts-text { fill: var(--text-muted) !important; }
+
+/* =============================================
+   THEME TOGGLE BUTTON
+============================================= */
+.btn-theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: all var(--transition);
+}
+
+.btn-theme:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* =============================================
+   ADVANCED FILTERS
+============================================= */
+.btn-filter-toggle {
+  padding: 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.btn-filter-toggle:hover,
+.btn-filter-toggle.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.advanced-filters {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-group label {
+  font-size: .68rem;
+}
+
+.btn-clear-filters {
+  margin-top: 10px;
+  padding: 6px 14px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: .78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-clear-filters:hover {
+  border-color: var(--expense);
+  color: var(--expense);
+}
+
+@media (max-width: 600px) {
+  .filter-row { grid-template-columns: 1fr 1fr; }
+}
+
+/* =============================================
+   LIST ACTIONS (count + export)
+============================================= */
+.list-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.list-count {
+  font-size: .78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.btn-export {
+  padding: 7px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: .8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-export:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* =============================================
+   EDIT BUTTON & INLINE EDIT FORM
+============================================= */
+.tx-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: .85rem;
+  flex-shrink: 0;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.tx-edit:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tx-editing {
+  grid-template-columns: 3px 1fr;
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.tx-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.edit-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.edit-row select,
+.edit-row input {
+  flex: 1;
+  min-width: 100px;
+  padding: 8px 10px;
+  font-size: .82rem;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit-save {
+  flex: 1;
+  padding: 8px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition);
+}
+
+.btn-edit-save:hover { opacity: .85; }
+
+.btn-edit-cancel {
+  flex: 1;
+  padding: 8px;
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-edit-cancel:hover {
+  border-color: var(--expense);
+  color: var(--expense);
 }
